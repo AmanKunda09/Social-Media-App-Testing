@@ -30,7 +30,12 @@ export default NextAuth({
     async redirect({ url, baseUrl }) {
       console.log("url :", url);
       console.log("baseUrl :", baseUrl);
-      return url
+      if (url.includes('callbackUrl')) {
+        const callbackUrl = new URL(url).searchParams.get('callbackUrl');
+        const decodedCallbackUrl = decodeURIComponent(callbackUrl);
+        return decodedCallbackUrl
+      }
+      return baseUrl
     },
   },
 });
