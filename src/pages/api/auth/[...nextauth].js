@@ -1,7 +1,7 @@
-import NextAuth from "next-auth"
-import DiscordProvider from "next-auth/providers/discord"
-import GoogleProvider from "next-auth/providers/google"
-import GitHubProvider from "next-auth/providers/github"
+import NextAuth from "next-auth";
+import DiscordProvider from "next-auth/providers/discord";
+import GoogleProvider from "next-auth/providers/google";
+import GitHubProvider from "next-auth/providers/github";
 
 export default NextAuth({
   providers: [
@@ -25,6 +25,12 @@ export default NextAuth({
       clientSecret: process.env.GITHUB_SECRET,
     }),
   ],
-
-
-})
+  secret: process.env.NEXTAUTH_SECRET,
+  callbacks: {
+    async redirect({ url, baseUrl }) {
+      console.log("url :", url);
+      console.log("baseUrl :", baseUrl);
+      return url
+    },
+  },
+});
