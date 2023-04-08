@@ -5,6 +5,8 @@ import "./globals.css";
 import { ApolloProvider } from "@apollo/client";
 import { SessionProvider } from "next-auth/react";
 import apolloClient from "@/utils/providers/apolloClient";
+import TopNavbar from "@/components/navbar/TopNavbar";
+import SideNavbar from "@/components/navbar/SideNavbar";
 
 export const metadata = {
   title: "Create Next App",
@@ -15,9 +17,19 @@ export default function RootLayout({ children }) {
   return (
     <html lang="en">
       <body>
-        <SessionProvider>
-          <ApolloProvider client={apolloClient}>{children}</ApolloProvider>
-        </SessionProvider>
+        <div className="min-h-screen flex flex-col items-center justify-center  bg-black text-white relative">
+          <SessionProvider>
+            <ApolloProvider client={apolloClient}>
+              <div className="absolute top-0">
+                <TopNavbar />
+              </div>
+              <div className="absolute left-0">
+                <SideNavbar />
+              </div>
+              {children}
+            </ApolloProvider>
+          </SessionProvider>
+        </div>
       </body>
     </html>
   );
