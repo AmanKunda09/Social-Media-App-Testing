@@ -4,6 +4,7 @@ import "./globals.css";
 
 import { ApolloProvider } from "@apollo/client";
 import { SessionProvider } from "next-auth/react";
+import { ReduxProvider } from "@/utils/providers/redux";
 import apolloClient from "@/utils/providers/apolloClient";
 import TopNavbar from "@/components/navbar/TopNavbar";
 import SideNavbar from "@/components/navbar/SideNavbar";
@@ -19,15 +20,17 @@ export default function RootLayout({ children }) {
       <body>
         <div className="min-h-screen flex flex-col items-center justify-center  bg-black text-white relative">
           <SessionProvider>
-            <ApolloProvider client={apolloClient}>
-              <div className="absolute top-0">
-                <TopNavbar />
-              </div>
-              <div className="absolute left-0">
-                <SideNavbar />
-              </div>
-              {children}
-            </ApolloProvider>
+            <ReduxProvider>
+              <ApolloProvider client={apolloClient}>
+                <div className="absolute top-0">
+                  <TopNavbar />
+                </div>
+                <div className="absolute left-0">
+                  <SideNavbar />
+                </div>
+                {children}
+              </ApolloProvider>
+            </ReduxProvider>
           </SessionProvider>
         </div>
       </body>
